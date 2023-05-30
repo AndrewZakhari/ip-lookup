@@ -2,8 +2,7 @@
 import Image from 'next/image'
 import styles from './page.module.css'
 import { useState } from 'react';
-import axios from 'axios';
-import { POST } from './api/route';
+
 
 interface ApiData {
     ip: String,
