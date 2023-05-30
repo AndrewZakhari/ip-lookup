@@ -42,7 +42,7 @@ export default function Home() {
   const [ipData , setIpData] = useState<ApiData | null>(null)
   const [input ,setInput] = useState<string | null>(null)
 
-  console.log(window.navigator.geolocation);
+ 
 
   const handleSubmit = async (e : any) => { 
     e.preventDefault() 
@@ -55,7 +55,7 @@ export default function Home() {
       setError("Error connecting to the server")
     }else{
     setIpData(data)
-    console.log(data)
+    
     setError(null)
     }
   }
