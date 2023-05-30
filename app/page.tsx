@@ -2,6 +2,8 @@
 import Image from 'next/image'
 import styles from './page.module.css'
 import { useState } from 'react';
+import axios from 'axios';
+import { POST } from './api/route';
 
 interface ApiData {
     ip: String,
@@ -33,26 +35,85 @@ interface ApiData {
   org: String
 }
 
-const Api = async () => {
-  const [apiData, setApiData] = useState<ApiData>();
-  fetch('https://ipapi.co/8.8.8.8/json/')
-.then((response) => {
-   response.json().then(jsonData => {
-    console.log(jsonData);
-    setApiData(jsonData);
-  });
-})
-.catch(function(error) {
-  console.log(error)
-});
-  console.log(apiData)
-}
+
 
 export default function Home() {
-  
+
+  const [Error, setError] = useState<string | null>(null)
+  const [ipData , setIpData] = useState<ApiData | null>(null)
+  const [input ,setInput] = useState<string | null>(null)
+
+  console.log(window.navigator.geolocation);
+
+  const handleSubmit = async (e : any) => { 
+    e.preventDefault() 
+    const res = await fetch(`https://ipapi.co/${input}/json/`);
+    const data = await res.json();
+    if(data.error){
+      setError("Invalid IP Address")
+    }
+    else if(!data){
+      setError("Error connecting to the server")
+    }else{
+    setIpData(data)
+    console.log(data)
+    setError(null)
+    }
+  }
+  const getUserIP = async (e: any) => {
+        e.preventDefault()
+        const ipRes = await fetch("https://api.ipify.org/?format=json")
+        const ipData = await ipRes.json()
+        const res = await fetch(`https://ipapi.co/${ipData.ip}/json/`)
+        const data = await res.json();
+        setIpData(data)
+  }
   return (
-   <div>
-    
+   <div className={styles.container}>
+    {Error &&
+    <div className={styles.error}>
+      <p>{Error}</p>
+    </div> 
+    }
+    <form className={styles.form} onSubmit={handleSubmit}>
+      <input className={styles.input} onChange={(e) => setInput(e.target.value)} name='ip' placeholder='ex: 8.8.8.8'/>   
+      {input && 
+      <button className={styles.button}>Find</button> 
+      }
+      {!input && 
+      <button className={styles.button} type='button' onClick={getUserIP}>Lookup Your IP</button>
+      }
+    </form>
+    { ipData && 
+      <div className={styles.table}>
+       <tr className={styles.mainRow}>
+        <th className={styles.ip}>IP</th>
+        <th className={styles.city}>City</th>
+        <th className={styles.region}>Region</th>
+        <th className={styles.regionCode}>Region Code</th>
+        <th className={styles.country}>Country</th>
+        <th className={styles.countryName}>Country Name</th>
+        <th className={styles.latitude}>Latitude</th>
+        <th className={styles.longitude}>Longitude</th>
+        <th className={styles.timezone}>Timezone</th>
+        <th className={styles.currency}>Currency</th>
+        <th className={styles.languages}>Languages</th>
+        </tr> 
+        <tr className={styles.infoRow}>
+          <td className={styles.ip}>{ipData.ip}</td>
+          <td className={styles.city}>{ipData.city}</td>
+          <td className={styles.countryName}>{ipData.country_name}</td>
+          <td className={styles.region}>{ipData.region}</td>
+          <td className={styles.regionCode}> {ipData.region_code}</td>
+          <td className={styles.country}>{ipData.country}</td>
+          <td className={styles.latitude}>{ipData.latitude.toString()}</td>
+          <td className={styles.longitude}>{ipData.longitude.toString()}</td>
+          <td className={styles.timezone}>{ipData.timezone}</td>
+          <td className={styles.currency}>{ipData.currency}</td>
+          <td className={styles.languages}>{ipData.languages}</td>
+        </tr>
+      </div>
+    }
    </div> 
   )
 }
