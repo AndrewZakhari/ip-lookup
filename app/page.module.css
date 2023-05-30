@@ -69,67 +69,90 @@
   border: solid black 1px;
   padding-inline: 10px;
   width: 150px;
+  height: 3vh;
   text-align: center;
+  overflow: hidden;
 }
 .city{
   border: solid black 1px;
   padding-inline: 10px;
+  height: 3vh;
   width: 150px;
   text-align: center;
+  overflow: hidden;
 }
+
 .region{
   border: solid black 1px;
   padding-inline: 10px;
+  height: 3vh;
   width: 150px;
   text-align: center;
+  overflow: hidden;
 }
 .regionCode{
   border: solid black 1px;
   padding-inline: 10px;
   width: 150px;
-  text-align: center
+  height: 3vh;
+  text-align: center;
+  overflow:hidden;
 }
 .country{
   border: solid black 1px;
   padding-inline: 10px;
   width: 150px;
+  height: 3vh;
   text-align: center;
+  overflow: hidden;
 }
 .countryName{
   border: solid black 1px;
   padding-inline: 10px;
   width: 150px;
+  height: 3vh;
   text-align: center;
+  overflow: hidden;
 }
 .longitude{
   border: solid black 1px;
   padding-inline: 10px;
   width: 150px;
-  text-align: center
+  height: 3vh;
+  text-align: center;
+  overflow: hidden;
 }
 .latitude{
   border: solid black 1px;
   padding-inline: 10px;
   width: 150px;
+  height: 3vh;
+  overflow: hidden;
   text-align: center;
 }
 .currency{
   border: solid black 1px;
   padding-inline: 10px;
   width: 150px;
+  height: 3vh;
   text-align: center;
+  overflow:hidden;
 }
 .timezone{
   border: solid black 1px;
   padding-inline: 10px;
   width: 200px;
+  height: 3vh;
   text-align: center;
+  overflow:hidden;
 }
 .languages{
   border: solid black 1px;
   padding-inline: 10px;
   width: 150px;
   text-align: center;
+  height: 3vh;
+  overflow: hidden  ;
 }
 @keyframes formAnimation {
   0%{
@@ -148,4 +171,38 @@
   100%{
     transform: scale(1.1, 1.1)
   }
+}
+@media screen and (max-width: 480px){
+  .form{
+    display: flex;
+    flex-direction: column;
+  }
+  .input{
+    width: max-content;
+    border-radius: 1vw;
+  }
+  .button{
+    padding-block: 10px;
+    border-radius: 1vw;
+  }
+  .table{
+    flex-direction: row;
+  }
+  .mainRow{
+    display:grid;
+    max-width: 45vw;
+  }
+  .infoRow{
+    display:grid;
+    max-width:45vw;
+  }
+  .timezone{
+    width: 150px;
+  }
+  .container{
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+  }
+
 }
